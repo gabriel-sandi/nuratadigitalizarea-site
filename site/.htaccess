@@ -3,12 +3,13 @@ ErrorDocument 404 /404.html
 Options -Indexes
 AddDefaultCharset UTF-8
 
-# Redirecționare către HTTPS și către adresa fără www.
-# Activați aceste rânduri (ștergeți „# ” din fața lor) DOAR după ce certificatul SSL este activ.
-# RewriteEngine On
-# RewriteCond %{HTTPS} !=on [OR]
-# RewriteCond %{HTTP_HOST} ^www\. [NC]
-# RewriteRule ^ https://nuratadigitalizarea.ro%{REQUEST_URI} [L,R=301]
+# Redirecționare către HTTPS și către adresa fără www (SSL Let's Encrypt activ din 18.11.2026).
+# Excepție: /.well-known/ rămâne accesibil pe http, pentru reînnoirea certificatului.
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/\.well-known/
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://nuratadigitalizarea.ro%{REQUEST_URI} [L,R=301]
 
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
