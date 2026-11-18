@@ -1,0 +1,23 @@
+# Nu Rata Digitalizarea — setări server (Apache, Hetzner Webhosting)
+ErrorDocument 404 /404.html
+Options -Indexes
+AddDefaultCharset UTF-8
+
+# Redirecționare către HTTPS și către adresa fără www.
+# Activați aceste rânduri (ștergeți „# ” din fața lor) DOAR după ce certificatul SSL este activ.
+# RewriteEngine On
+# RewriteCond %{HTTPS} !=on [OR]
+# RewriteCond %{HTTP_HOST} ^www\. [NC]
+# RewriteRule ^ https://nuratadigitalizarea.ro%{REQUEST_URI} [L,R=301]
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>

@@ -1,0 +1,4 @@
+# Mesajele primite prin formulare stau doar pe server
+private/mesaje/
+.DS_Store
+Thumbs.db

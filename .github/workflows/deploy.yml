@@ -1,0 +1,103 @@
+name: Publicare pe Hetzner
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hetzner
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  # Singurele foldere de pe server în care scrie publicarea.
+  # Nimic din afara public_html/nuratadigitalizarea.ro/ nu este atins.
+  # (site = document root, private = setări și mesaje, inaccesibil din browser)
+  REMOTE_BASE: public_html/nuratadigitalizarea.ro
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verific secretele
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          missing=""
+          [ -n "$FTP_HOST" ] || missing="$missing FTP_HOST"
+          [ -n "$FTP_USER" ] || missing="$missing FTP_USER"
+          [ -n "$FTP_PASSWORD" ] || missing="$missing FTP_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Lipsesc secretele:$missing (Settings > Secrets and variables > Actions)"
+            exit 1
+          fi
+
+      - name: Pun tokenul SMTP în config.php
+        env:
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        run: |
+          if [ -z "$SMTP_PASS" ]; then
+            echo "::warning::Secretul SMTP_PASS lipsește: config.php NU se urcă (rămâne cel de pe server)."
+            rm private/config.php
+            exit 0
+          fi
+          python3 - <<'PY'
+          import os
+          p = "private/config.php"
+          s = open(p, encoding="utf-8").read()
+          tok = os.environ["SMTP_PASS"].replace("\\", "\\\\").replace("'", "\\'")
+          old = "'LIPITI-AICI-TOKENUL-SMTP-DIN-PROTON'"
+          assert s.count(old) == 1, "placeholder lipsă în config.php"
+          open(p, "w", encoding="utf-8").write(s.replace(old, "'" + tok + "'"))
+          PY
+          php -l private/config.php
+
+      - name: Instalez lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Urc fișierele
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          # Opțional (Settings > Secrets and variables > Actions > Variables):
+          # DEPLOY_PROTOCOL = sftp (implicit) sau ftps; DEPLOY_PORT = 22 (implicit pentru sftp) / 21 pentru ftps
+          DEPLOY_PROTOCOL: ${{ vars.DEPLOY_PROTOCOL }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+        run: |
+          proto="${DEPLOY_PROTOCOL:-sftp}"
+          if [ "$proto" = "ftps" ]; then
+            url="ftp://$FTP_HOST:${DEPLOY_PORT:-21}"
+          else
+            url="sftp://$FTP_HOST:${DEPLOY_PORT:-22}"
+          fi
+          cat > "$RUNNER_TEMP/deploy.lftp" <<LFTP
+          set cmd:fail-exit yes
+          set net:max-retries 2
+          set net:timeout 30
+          set sftp:auto-confirm yes
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          open --env-password -u "$FTP_USER" $url
+          # Intru în folderul domeniului; dacă lipsește oricare folder, publicarea se oprește.
+          cd $REMOTE_BASE
+          cd site
+          cd ..
+          cd private
+          cd ..
+          # Site-ul public: fișierele șterse din repo se șterg și de pe server,
+          # DOAR în folderul site (excepție .well-known, folosit de SSL).
+          mirror --reverse --delete --verbose --parallel=4 --exclude-glob .well-known/ site/ site/
+          # Folderul private: doar adaug/actualizez, nu șterg nimic (aici stau mesajele primite).
+          mirror --reverse --verbose --exclude-glob mesaje/ private/ private/
+          bye
+          LFTP
+          LFTP_PASSWORD="$FTP_PASSWORD" lftp -f "$RUNNER_TEMP/deploy.lftp"
+          echo "Publicat: https://nuratadigitalizarea.ro"
