@@ -48,6 +48,7 @@
     mesaje: 'Mesaje de la clienți: un agent IA pe WhatsApp care răspunde non-stop, din informațiile firmei.',
     recenzii: 'Recenzii: răspuns personalizat și automat la recenziile Google, în limba clientului.',
     promovare: 'Promovare: o promoție pornită o singură dată pe toate canalele, cu postări generate automat.',
+    restaurant: 'Restaurant: o singură aplicație pentru sală, bucătărie, stoc, HACCP, echipă și marketing.',
     google: 'Google: Search Console, date structurate și profil de business complet, ca firma să fie găsită ușor.'
   };
 
@@ -55,7 +56,7 @@
     sedinte: 'ia-pentru-firme.html#productivitate', documente: 'ia-pentru-firme.html#documente', email: 'ia-pentru-firme.html#automatizare',
     raportare: 'ia-pentru-firme.html#raportare', cunostinte: 'ia-pentru-firme.html#asistenti', procese: 'ia-pentru-firme.html#automatizare',
     clienti: 'agent-ia-whatsapp.html', hr: 'ia-pentru-firme.html#asistenti', mesaje: 'agent-ia-whatsapp.html', recenzii: 'recenzii-google.html',
-    promovare: 'campanii-promovare.html', google: 'vizibilitate-google.html'
+    promovare: 'campanii-promovare.html', google: 'vizibilitate-google.html', restaurant: 'aplicatie-restaurant.html'
   };
   var DIM_LINKS = { clienti: 'retele-sociale.html', guvernanta: 'ia-pentru-firme.html#guvernanta', oameni: 'training.html', procese: 'ia-pentru-firme.html#automatizare' };
 

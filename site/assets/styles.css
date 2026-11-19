@@ -463,3 +463,34 @@ details.more .chain { margin-bottom: 0; }
 .group-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
 .group-head h2 { margin: 0; }
 .btn-light, .btn-light:hover { color: #12202f; }
+
+/* Capturi din aplicație */
+.shot { margin: 0; }
+.shot a { display: block; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--white); }
+.shot img { width: 100%; height: auto; display: block; }
+.shot figcaption { font-size: .78rem; color: var(--muted); margin-top: 8px; }
+.shot.phone { max-width: 300px; margin-inline: auto; }
+.shot.phone a { border-radius: 28px; border: 6px solid #1c2733; }
+.gallery { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: flex-start; }
+.gallery .shot { flex: 1 1 520px; max-width: 900px; }
+.gallery .shot.phone { flex: 0 1 280px; }
+.hero-visual .shot.phone { max-width: 270px; }
+.phones { display: flex; gap: 16px; justify-content: center; align-items: flex-start; }
+.phones .shot.phone { flex: 1 1 0; max-width: 240px; }
+.phones .shot.phone:nth-child(2) { margin-top: 40px; }
+.showcase .shot + .shot { margin-top: 20px; }
+.showcase .shot.phone { max-width: 280px; }
+.showcase .shot:not(.phone) img, .hero-visual .shot:not(.phone) img { max-height: 460px; object-fit: cover; object-position: top; }
+.showcase .shot.phone img { max-height: 520px; object-fit: cover; object-position: top; }
+.gallery .shot:not(.phone) img { max-height: 620px; object-fit: cover; object-position: top; }
+@media (max-width: 700px) {
+  .showcase .shot:not(.phone) img, .hero-visual .shot:not(.phone) img, .gallery .shot:not(.phone) img { max-height: 300px; }
+  .showcase .shot.phone img, .gallery .shot.phone img { max-height: 380px; }
+  .phones .shot.phone img { max-height: 360px; object-fit: cover; object-position: top; }
+}
+.mod { padding: 64px 0; }
+@media (max-width: 700px) { .mod { padding: 44px 0; } }
+.jump.tabs { position: sticky; top: 68px; z-index: 5; background: var(--paper); padding: 10px 0; margin-top: 16px; }
+.jump.tabs a.active { background: var(--btn-bg); border-color: var(--btn-bg); color: #fff; }
+.mod[hidden] { display: none; }
+@media (max-width: 700px) { .jump.tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; } .jump.tabs a { white-space: nowrap; } }

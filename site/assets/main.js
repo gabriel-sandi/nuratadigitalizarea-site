@@ -85,3 +85,26 @@ document.querySelectorAll('form[data-simple-form]').forEach(function (form) {
     sync();
   });
 })();
+
+// File (tab-uri) pentru module: fără JavaScript se văd toate secțiunile
+(function () {
+  var nav = document.querySelector('[data-tabs]');
+  if (!nav) return;
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+  var panels = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  nav.setAttribute('role', 'tablist');
+  function show(i, focus) {
+    links.forEach(function (a, j) {
+      a.setAttribute('aria-selected', i === j ? 'true' : 'false');
+      a.classList.toggle('active', i === j);
+      if (panels[j]) panels[j].hidden = i !== j;
+    });
+    if (focus && panels[i]) nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  links.forEach(function (a, i) {
+    a.setAttribute('role', 'tab');
+    a.addEventListener('click', function (e) { e.preventDefault(); show(i, true); history.replaceState(null, '', a.getAttribute('href')); });
+  });
+  var start = links.findIndex(function (a) { return a.getAttribute('href') === location.hash; });
+  show(start < 0 ? 0 : start, false);
+})();
