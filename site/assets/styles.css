@@ -522,3 +522,18 @@ details.more .chain { margin-bottom: 0; }
   .app-feature-img { border-left: 0; border-top: 1px solid var(--line); max-height: 220px; }
 }
 .nav-links a { white-space: nowrap; }
+.app-feature:hover { border-color: var(--line); box-shadow: none; }
+.app-feature .btn-row { margin: 0; }
+.partner { display: flex; align-items: center; gap: 8px; font-size: .92rem; color: var(--muted); margin: 14px 0 0; }
+.partner a { color: var(--ink); font-weight: 600; }
+.partner img { height: 28px; width: auto; display: block; }
+.svc-hero .partner { margin: 0 0 10px; }
+.partner img { height: 40px; }
+.partner a { display: inline-flex; border-radius: 6px; }
+.partner .logo-dark { display: none; }
+:root[data-theme="dark"] .partner .logo-light { display: none; }
+:root[data-theme="dark"] .partner .logo-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .partner .logo-light { display: none; }
+  :root:not([data-theme="light"]) .partner .logo-dark { display: block; }
+}
