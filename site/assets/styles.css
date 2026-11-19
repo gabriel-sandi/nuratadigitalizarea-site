@@ -437,3 +437,29 @@ details.more summary::after { content: "+"; font-size: 1.2rem; line-height: 1; }
 details.more[open] summary::after { content: "−"; }
 details.more .checklist { margin: 4px 0 0; font-size: .94rem; }
 details.more .chain { margin-bottom: 0; }
+.serp-bar { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; color: var(--ink-2); margin-bottom: 12px; }
+.serp-url { font-size: .76rem; color: var(--teal); }
+.serp-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.serp-chips span { font-size: .74rem; border: 1px solid var(--line); border-radius: 99px; padding: 3px 10px; color: var(--ink-2); }
+.mini-bars { display: flex; align-items: flex-end; gap: 6px; height: 70px; margin-bottom: 10px; padding: 0 2px; }
+.mini-bars span { flex: 1; background: var(--teal-soft); border-top: 3px solid var(--teal); border-radius: 4px 4px 0 0; }
+
+/* Pagini de serviciu */
+.crumbs { font-size: .88rem; color: var(--muted); margin-bottom: 14px; }
+.crumbs a { color: var(--muted); }
+.svc-hero { padding: 64px 0 56px; border-bottom: 1px solid var(--line); }
+.svc-hero .hero-grid { align-items: center; }
+.feature h3 { font-size: 1.12rem; }
+.chips-static { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.chips-static li { padding: 7px 14px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-size: .9rem; color: var(--ink-2); }
+.section-alt .chips-static li { background: var(--paper); }
+.case { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; background: var(--white); border: 1px solid var(--line); border-radius: 20px; padding: 36px; }
+.section-alt .case { background: var(--paper); }
+@media (max-width: 900px) { .case { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; } }
+.case-stats { display: grid; gap: 12px; }
+.case-stats .stat { background: var(--paper); }
+.section-alt .case-stats .stat { background: var(--white); }
+.case-note { font-size: .82rem; color: var(--muted); margin-top: 12px; }
+.group-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.group-head h2 { margin: 0; }
+.btn-light, .btn-light:hover { color: #12202f; }

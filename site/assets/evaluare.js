@@ -32,6 +32,7 @@
     date: 'Centralizați documentele și datele importante într-un loc structurat (ex. SharePoint, Google Drive organizat, un sistem de management al documentelor).',
     instrumente: 'Alegeți instrumente aprobate de firmă (ex. Microsoft Copilot, ChatGPT Team/Enterprise) în locul conturilor personale.',
     oameni: 'Un training practic de 2–3 ore pe sarcinile reale ale echipei aduce cel mai rapid adopție.',
+    clienti: 'Adunați mesajele, recenziile și rețelele sociale într-un singur loc. Un agent IA pe WhatsApp și răspunsul automat la recenzii sunt, de obicei, cele mai rapide câștiguri.',
     guvernanta: 'Introduceți o politică simplă de utilizare a IA: ce date pot fi folosite, ce instrumente, cine aprobă. Țineți cont de GDPR și de AI Act.'
   };
 
@@ -43,8 +44,28 @@
     cunostinte: 'Cunoștințe interne: un asistent IA care răspunde din documentele firmei.',
     procese: 'Procese manuale: fluxuri automatizate între aplicațiile pe care le folosiți deja.',
     clienti: 'Relația cu clienții: răspunsuri rapide, oferte și follow-up asistate de IA.',
-    hr: 'HR: anunțuri de angajare, onboarding și răspunsuri la întrebările angajaților.'
+    hr: 'HR: anunțuri de angajare, onboarding și răspunsuri la întrebările angajaților.',
+    mesaje: 'Mesaje de la clienți: un agent IA pe WhatsApp care răspunde non-stop, din informațiile firmei.',
+    recenzii: 'Recenzii: răspuns personalizat și automat la recenziile Google, în limba clientului.',
+    promovare: 'Promovare: o promoție pornită o singură dată pe toate canalele, cu postări generate automat.',
+    google: 'Google: Search Console, date structurate și profil de business complet, ca firma să fie găsită ușor.'
   };
+
+  var AREA_LINKS = {
+    sedinte: 'ia-pentru-firme.html#productivitate', documente: 'ia-pentru-firme.html#documente', email: 'ia-pentru-firme.html#automatizare',
+    raportare: 'ia-pentru-firme.html#raportare', cunostinte: 'ia-pentru-firme.html#asistenti', procese: 'ia-pentru-firme.html#automatizare',
+    clienti: 'agent-ia-whatsapp.html', hr: 'ia-pentru-firme.html#asistenti', mesaje: 'agent-ia-whatsapp.html', recenzii: 'recenzii-google.html',
+    promovare: 'campanii-promovare.html', google: 'vizibilitate-google.html'
+  };
+  var DIM_LINKS = { clienti: 'retele-sociale.html', guvernanta: 'ia-pentru-firme.html#guvernanta', oameni: 'training.html', procese: 'ia-pentru-firme.html#automatizare' };
+
+  function addLink(li, href) {
+    if (!href) return;
+    li.appendChild(document.createTextNode(' '));
+    var a = document.createElement('a');
+    a.href = href; a.className = 'link-arrow'; a.textContent = 'Detalii';
+    li.appendChild(a);
+  }
 
   function compute() {
     var dims = {}, sum = 0;
@@ -110,6 +131,7 @@
       li.innerHTML = '<strong></strong> ';
       li.firstChild.textContent = o.d.label + ':';
       li.appendChild(document.createTextNode(DIM_TIPS[o.key]));
+      addLink(li, DIM_LINKS[o.key]);
       recs.appendChild(li);
     });
 
@@ -122,6 +144,7 @@
       if (!AREA_WINS[a]) return;
       var li = document.createElement('li');
       li.textContent = AREA_WINS[a];
+      addLink(li, AREA_LINKS[a]);
       wins.appendChild(li);
     });
 
