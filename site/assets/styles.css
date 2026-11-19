@@ -533,13 +533,31 @@ details.more .chain { margin-bottom: 0; }
 .partner-cta { font-size: .9rem; color: var(--accent-ink, var(--accent)); }
 .partner-link:hover .partner-url { color: var(--accent); }
 .svc-hero .partner { margin: 28px 0 0; }
-/* Subsol: colaboratori */
-.footer-partners { margin-top: 22px; }
-.footer-partner { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #c8d1db; font-size: .88rem; line-height: 1.45; }
-.footer-partner img { height: 40px; width: auto; flex: none; border-radius: 6px; }
-.footer-partner strong { display: block; color: #fff; font-weight: 600; }
-.footer-partner .u { text-decoration: underline; text-underline-offset: 2px; }
-.footer-partner:hover .u { color: #fff; }
+/* Banda Colaboratori (deasupra subsolului), zi si noapte */
+.partners-band { background: var(--paper-2); border-top: 1px solid var(--line); padding: 22px 0; --pc-bg: #fff; --pc-line: #dcd6cc; --pc-ink: #16302e; --pc-accent: #3d6f6b; --pc-muted: #475569; --pc-btn: #3d6f6b; --pc-btn-ink: #fff; --pc-btn-hover: #2f5754; }
+.partners-row { display: flex; align-items: center; gap: 28px; }
+.partners-label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--pc-muted); flex: none; }
+.partner-card { flex: 1; display: flex; align-items: center; gap: 22px; padding: 12px 14px 12px 14px; background: var(--pc-bg); border: 1px solid var(--pc-line); border-radius: 16px; text-decoration: none; color: var(--pc-ink); transition: border-color .2s, box-shadow .2s; }
+.partner-card:hover { border-color: var(--pc-accent); box-shadow: var(--shadow); text-decoration: none; }
+.pc-brand { display: flex; align-items: center; gap: 12px; flex: none; }
+.pc-brand img { width: 40px; height: 40px; display: block; border-radius: 9px; }
+.pc-name { font-weight: 700; font-size: 1.12rem; letter-spacing: -.01em; color: var(--pc-ink); }
+.pc-name span { color: var(--pc-accent); }
+.pc-sep { width: 1px; align-self: stretch; background: var(--pc-line); flex: none; }
+.pc-desc { flex: 1; color: var(--pc-muted); font-size: .95rem; }
+.pc-btn { flex: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: var(--pc-btn); color: var(--pc-btn-ink); font-weight: 600; font-size: .92rem; transition: background .15s; }
+.partner-card:hover .pc-btn { background: var(--pc-btn-hover); }
+:root[data-theme="dark"] .partners-band { background: var(--night); border-top-color: rgba(255,255,255,.06); --pc-bg: #111c27; --pc-line: #22313f; --pc-ink: #f4ece4; --pc-accent: #5fb8b0; --pc-muted: #9fb0c0; --pc-btn: #5fb8b0; --pc-btn-ink: #16302e; --pc-btn-hover: #7cc8c1; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .partners-band { background: var(--night); border-top-color: rgba(255,255,255,.06); --pc-bg: #111c27; --pc-line: #22313f; --pc-ink: #f4ece4; --pc-accent: #5fb8b0; --pc-muted: #9fb0c0; --pc-btn: #5fb8b0; --pc-btn-ink: #16302e; --pc-btn-hover: #7cc8c1; }
+}
+@media (max-width: 860px) {
+  .partners-row { flex-direction: column; align-items: stretch; gap: 12px; }
+  .partner-card { flex-wrap: wrap; gap: 12px 16px; padding: 16px; }
+  .pc-sep { display: none; }
+  .pc-desc { flex-basis: 100%; order: 2; }
+  .pc-btn { order: 3; }
+}
 /* Capturi: niciodata deformate, indiferent de inaltimea maxima */
 .shot img { object-fit: cover; object-position: top; }
 .app-feature-img { max-height: none; }
