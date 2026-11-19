@@ -65,3 +65,23 @@ document.querySelectorAll('form[data-simple-form]').forEach(function (form) {
     window.NRD.submitForm(form, status, form.dataset.ok || 'Mulțumim! Am primit mesajul și revenim în cel mult o zi lucrătoare.');
   });
 });
+
+// Mod de noapte: comutator manual (ținut minte în browser), altfel urmează setarea sistemului
+(function () {
+  var b = document.querySelector('.theme-btn');
+  if (!b) return;
+  var root = document.documentElement;
+  function current() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sync() { b.setAttribute('aria-pressed', current() === 'dark' ? 'true' : 'false'); }
+  sync();
+  b.addEventListener('click', function () {
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('nrd-theme', next); } catch (e) {}
+    sync();
+  });
+})();
