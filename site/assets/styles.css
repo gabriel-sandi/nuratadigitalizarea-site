@@ -100,7 +100,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .menu-btn { display: none; background: none; border: 1px solid var(--line); border-radius: 8px; width: 44px; height: 44px; cursor: pointer; color: var(--ink); }
 .menu-btn svg { width: 22px; height: 22px; }
 
-@media (max-width: 920px) {
+@media (max-width: 1000px) {
   .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
   .nav-links { display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--paper); border-bottom: 1px solid var(--line); padding: 12px 16px 20px; gap: 2px; }
   .nav-links.open { display: flex; }
@@ -338,7 +338,7 @@ fieldset.q legend { font-weight: 600; padding: 0 6px; margin-left: -6px; font-si
   :root:not([data-theme="light"]) .theme-btn .i-sun { display: block; }
   :root:not([data-theme="light"]) .theme-btn .i-moon { display: none; }
 }
-@media (max-width: 920px) { .theme-btn { margin-left: auto; } }
+@media (max-width: 1000px) { .theme-btn { margin-left: auto; } }
 
 /* Ajustări pentru modul de noapte */
 :root[data-theme="dark"] .checklist li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236fd1c4'%3E%3Cpath d='M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.3-8.3-1.1-1.1z'/%3E%3C/svg%3E"); }
@@ -507,3 +507,18 @@ details.more .chain { margin-bottom: 0; }
 @media (min-width: 641px) and (max-width: 900px) { .grid-3:has(> .card.compact:nth-child(3):last-child) { grid-template-columns: repeat(3, 1fr); } }
 .prose { max-width: 68ch; }
 .footer-bottom a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Aplicatia pentru restaurante: card evidentiat pe prima pagina */
+.app-feature { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; margin-top: 20px; padding: 0; overflow: hidden; text-decoration: none; color: inherit; transition: border-color .2s, box-shadow .2s; }
+.app-feature:hover { border-color: var(--accent, #e8590c); box-shadow: var(--shadow); }
+.app-feature-text { padding: 32px 0 32px 32px; }
+.app-feature-text h3 { font-size: 1.45rem; margin: 10px 0 8px; }
+.app-feature-text p { color: var(--ink-2); margin: 0 0 18px; }
+.app-feature-img { align-self: stretch; max-height: 300px; overflow: hidden; border-left: 1px solid var(--line); }
+.app-feature-img img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+@media (max-width: 760px) {
+  .app-feature { grid-template-columns: 1fr; gap: 0; }
+  .app-feature-text { padding: 24px 22px; }
+  .app-feature-img { border-left: 0; border-top: 1px solid var(--line); max-height: 220px; }
+}
+.nav-links a { white-space: nowrap; }
