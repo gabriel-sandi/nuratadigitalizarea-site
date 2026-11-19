@@ -524,16 +524,24 @@ details.more .chain { margin-bottom: 0; }
 .nav-links a { white-space: nowrap; }
 .app-feature:hover { border-color: var(--line); box-shadow: none; }
 .app-feature .btn-row { margin: 0; }
-.partner { display: flex; align-items: center; gap: 8px; font-size: .92rem; color: var(--muted); margin: 14px 0 0; }
-.partner a { color: var(--ink); font-weight: 600; }
-.partner img { height: 28px; width: auto; display: block; }
-.svc-hero .partner { margin: 0 0 10px; }
-.partner img { height: 40px; }
-.partner a { display: inline-flex; border-radius: 6px; }
-.partner .logo-dark { display: none; }
-:root[data-theme="dark"] .partner .logo-light { display: none; }
-:root[data-theme="dark"] .partner .logo-dark { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .partner .logo-light { display: none; }
-  :root:not([data-theme="light"]) .partner .logo-dark { display: block; }
-}
+/* Colaborare PatronReCa */
+.partner { margin: 18px 0 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.partner-label { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+.partner-link { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 6px; text-decoration: none; color: var(--ink); border-radius: 10px; }
+.partner-link img { width: 150px; height: auto; max-width: none; display: block; margin-left: -8px; }
+.partner-url { font-weight: 700; font-size: 1.05rem; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.partner-cta { font-size: .9rem; color: var(--accent-ink, var(--accent)); }
+.partner-link:hover .partner-url { color: var(--accent); }
+.svc-hero .partner { margin: 28px 0 0; }
+/* Subsol: colaboratori */
+.footer-partners { margin-top: 22px; }
+.footer-partner { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #c8d1db; font-size: .88rem; line-height: 1.45; }
+.footer-partner img { height: 40px; width: auto; flex: none; border-radius: 6px; }
+.footer-partner strong { display: block; color: #fff; font-weight: 600; }
+.footer-partner .u { text-decoration: underline; text-underline-offset: 2px; }
+.footer-partner:hover .u { color: #fff; }
+/* Capturi: niciodata deformate, indiferent de inaltimea maxima */
+.shot img { object-fit: cover; object-position: top; }
+.app-feature-img { max-height: none; }
+.app-feature-img img { height: 100%; object-fit: cover; object-position: top left; }
+@media (max-width: 760px) { .app-feature-img { max-height: 240px; } }
