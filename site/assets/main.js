@@ -108,3 +108,15 @@ document.querySelectorAll('form[data-simple-form]').forEach(function (form) {
   var start = links.findIndex(function (a) { return a.getAttribute('href') === location.hash; });
   show(start < 0 ? 0 : start, false);
 })();
+
+// Culoarea barei browserului pe telefon urmează tema aleasă manual
+(function () {
+  function apply() {
+    var t = document.documentElement.getAttribute('data-theme');
+    if (!t) return;
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.setAttribute('content', t === 'dark' ? '#0e161f' : '#f7f4ee'); });
+  }
+  apply();
+  var b = document.querySelector('.theme-btn');
+  if (b) b.addEventListener('click', function () { setTimeout(apply, 0); });
+})();
