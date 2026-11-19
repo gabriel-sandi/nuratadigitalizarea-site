@@ -573,3 +573,9 @@ details.more .chain { margin-bottom: 0; }
 .footer-bottom { margin-top: 24px !important; padding-top: 14px !important; }
 .partners-band { padding: 12px 0; }
 @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 22px 18px; } .footer-grid .footer-services { grid-template-columns: 1fr; } }
+/* Colaboratori in subsol, dupa coloane */
+.site-footer .partners-band { background: transparent; border-top: 1px solid rgba(255,255,255,.12); margin-top: 24px; padding: 16px 0 0; }
+.site-footer .partners-label { color: #9fb0c0; }
+.site-footer a.partner-card, .site-footer a.partner-card:hover { text-decoration: none; color: var(--pc-ink); }
+.site-footer .footer-bottom { border-top: 0; margin-top: 16px !important; padding-top: 4px !important; }
+@media (max-width: 860px) { .pc-btn { margin-left: 0; align-self: flex-start; } }
