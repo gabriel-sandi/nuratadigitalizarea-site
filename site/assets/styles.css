@@ -494,3 +494,8 @@ details.more .chain { margin-bottom: 0; }
 .jump.tabs a.active { background: var(--btn-bg); border-color: var(--btn-bg); color: #fff; }
 .mod[hidden] { display: none; }
 @media (max-width: 700px) { .jump.tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; } .jump.tabs a { white-space: nowrap; } }
+.namecard { display: grid; gap: 8px; text-align: center; }
+.namecard b { font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 3.6rem); font-weight: 600; color: var(--accent-ink); line-height: 1; }
+.namecard small { font-size: .95rem; color: var(--ink-2); }
+.namecard small + small { font-size: .85rem; color: var(--muted); max-width: 260px; margin: 0 auto; }
+.portrait:has(.namecard) { aspect-ratio: auto; padding: 56px 28px; align-self: start; }
