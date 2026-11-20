@@ -1,0 +1,67 @@
+name: Instalare Moodle (academie)
+
+# Se pornește DOAR manual: Actions → Instalare Moodle (academie) → Run workflow.
+# Urcă fișierele Moodle 4.5 LTS în public_html/nuratadigitalizarea.ro/academie
+# și creează folderul de date public_html/nuratadigitalizarea.ro/moodledata.
+# Nu șterge nimic și se oprește dacă Moodle e deja instalat (există config.php).
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hetzner
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  REMOTE_BASE: public_html/nuratadigitalizarea.ro
+  MOODLE_URL: https://download.moodle.org/download.php/direct/stable405/moodle-latest-405.tgz
+
+jobs:
+  moodle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Instalez lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Descarc Moodle 4.5 LTS
+        run: |
+          curl -fsSL "$MOODLE_URL" -o "$RUNNER_TEMP/moodle.tgz"
+          tar -xzf "$RUNNER_TEMP/moodle.tgz" -C "$RUNNER_TEMP"
+          test -f "$RUNNER_TEMP/moodle/version.php"
+          grep -m1 "release" "$RUNNER_TEMP/moodle/version.php"
+
+      - name: Urc Moodle pe server
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          DEPLOY_PROTOCOL: ${{ vars.DEPLOY_PROTOCOL }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+        run: |
+          proto="${DEPLOY_PROTOCOL:-sftp}"
+          if [ "$proto" = "ftps" ]; then url="ftp://$FTP_HOST:${DEPLOY_PORT:-21}"; else url="sftp://$FTP_HOST:${DEPLOY_PORT:-22}"; fi
+          common="set net:max-retries 3; set net:timeout 30; set sftp:auto-confirm yes; set ftp:ssl-force true; set ftp:ssl-protect-data true; open --env-password -u \"$FTP_USER\" $url"
+          export LFTP_PASSWORD="$FTP_PASSWORD"
+          # Oprire de siguranță: dacă Moodle e deja instalat, nu suprascriem nimic.
+          if lftp -c "$common; cd $REMOTE_BASE/academie; cls config.php" >/dev/null 2>&1; then
+            echo "::error::academie/config.php există deja: Moodle pare instalat. Nu urc nimic."
+            exit 1
+          fi
+          # Setări PHP doar pentru folderul academie (contul rămâne pe setările lui globale).
+          printf '%s\n' '# Setari PHP pentru Moodle, doar in acest folder' 'DirectoryIndex index.php' 'php_value max_input_vars 5000' 'php_value memory_limit 256M' 'php_value max_execution_time 120' > "$RUNNER_TEMP/academie.htaccess"
+          cat > "$RUNNER_TEMP/moodle.lftp" <<LFTP
+          set cmd:fail-exit yes
+          $common
+          cd $REMOTE_BASE
+          mkdir -f -p academie
+          mkdir -f -p moodledata
+          mirror --reverse --parallel=8 $RUNNER_TEMP/moodle/ academie/
+          put $RUNNER_TEMP/academie.htaccess -o academie/.htaccess
+          bye
+          LFTP
+          lftp -f "$RUNNER_TEMP/moodle.lftp"
+          echo "Gata. Deschideți https://academie.nuratadigitalizarea.ro pentru instalare."
