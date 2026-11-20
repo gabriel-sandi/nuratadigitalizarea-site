@@ -641,3 +641,5 @@ details.more .chain { margin-bottom: 0; }
   .tp-table td { display: grid; grid-template-columns: 42% 1fr; gap: 10px; padding: 10px 14px; }
   .tp-table td::before { content: attr(data-label); font-weight: 600; color: var(--ink); font-size: .85rem; }
 }
+.tp-soon { font-size: .9rem; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 12px; margin-top: 18px; }
+.tp-case .flow { margin: 14px 0; }

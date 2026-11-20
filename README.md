@@ -26,3 +26,9 @@ Se poate porni și manual: **Actions → Publicare pe Hetzner → Run workflow**
 | `SMTP_PASS` | tokenul SMTP Proton pentru `contact@nuratadigitalizarea.ro` (pus în `config.php` doar la publicare) |
 
 Variabile opționale (tab-ul **Variables**): `DEPLOY_PROTOCOL` = `sftp` (implicit) sau `ftps`; `DEPLOY_PORT` = `22` / `21`.
+
+## Platforma de e-learning (Moodle)
+
+`academie.nuratadigitalizarea.ro` → `public_html/nuratadigitalizarea.ro/academie` (Moodle 4.5 LTS), date în `public_html/nuratadigitalizarea.ro/moodledata` (în afara oricărui document root).
+
+Fișierele Moodle se urcă o singură dată, manual: **Actions → Instalare Moodle (academie) → Run workflow** (`.github/workflows/moodle.yml`). Workflow-ul nu șterge nimic și se oprește dacă `academie/config.php` există deja. Moodle nu este în repo; actualizările se fac din Moodle sau cu o versiune nouă a workflow-ului.
