@@ -22,7 +22,6 @@ env:
 
 jobs:
   restore:
-    if: ${{ hashFiles('moodle-restore/nrd-restore.php') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
