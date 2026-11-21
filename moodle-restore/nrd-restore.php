@@ -18,7 +18,14 @@ try {
   get_file_packer('application/vnd.moodle.backup')->extract_to_pathname($path, make_backup_temp_directory($dir));
   $info = backup_general_helper::get_backup_information($dir);
   $short = $info->original_course_shortname;
-  if ($DB->record_exists('course', ['shortname' => $short])) { echo json_encode(['fisier' => $f, 'stare' => 'exista deja', 'curs' => $short]); exit; }
+  if ($old = $DB->get_record('course', ['shortname' => $short])) {
+    $nmods = $DB->count_records('course_modules', ['course' => $old->id]);
+    $nusers = $DB->count_records_sql("SELECT COUNT(ue.id) FROM {user_enrolments} ue JOIN {enrol} e ON e.id = ue.enrolid WHERE e.courseid = ?", [$old->id]);
+    $nq = $DB->count_records_sql("SELECT COUNT(e.id) FROM {question_bank_entries} e JOIN {question_categories} qc ON qc.id = e.questioncategoryid WHERE qc.contextid = ?", [context_course::instance($old->id)->id]);
+    $gol = ($nmods <= 1 && $nusers == 0 && $nq == 0);
+    if (!$gol || ($_GET['inlocuieste'] ?? '') !== '1') { echo json_encode(['fisier' => $f, 'stare' => 'exista deja', 'curs' => $short, 'id' => $old->id, 'activitati' => $nmods, 'inscrisi' => $nusers, 'intrebari' => $nq, 'gol' => $gol], JSON_UNESCAPED_UNICODE); exit; }
+    ob_start(); delete_course($old, false); ob_end_clean();
+  }
   $cat = core_course_category::get_default();
   $cid = restore_dbops::create_new_course($info->original_course_fullname, $short, $cat->id);
   $rc = new restore_controller($dir, $cid, backup::INTERACTIVE_NO, backup::MODE_GENERAL, get_admin()->id, backup::TARGET_NEW_COURSE);

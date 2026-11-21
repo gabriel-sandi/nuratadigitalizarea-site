@@ -51,7 +51,7 @@ jobs:
           lftp -c "set cmd:fail-exit yes; $common; cd $REMOTE_BASE/academie; cls config.php; mkdir -f -p nrd-restore-files; put $RUNNER_TEMP/$NAME -o $NAME; mput -O nrd-restore-files moodle-restore/*.mbz"
           ok=1
           for f in curs-ia-intro-moodle45.mbz curs-ia-contracte-moodle45.mbz curs-ia-alegere-moodle45.mbz; do
-            r=$(curl -sS --max-time 600 "$SITE/$NAME?k=$TOKEN&f=$f" || true)
+            r=$(curl -sS --max-time 600 "$SITE/$NAME?k=$TOKEN&f=$f&inlocuieste=1" || true)
             echo "$f -> $r"
             echo "$r" | grep -Eq '"stare":"(restaurat|exista deja)"' || ok=0
           done
